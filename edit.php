@@ -5,6 +5,7 @@ if (!isset($_SESSION['user_info'])) {
     echo "<script>window.location.href = 'http://localhost/moji/user.php';</script>";
 } else {
     $username = $_SESSION['user_info']['username'];
+    $nickname = $_SESSION['user_info']['nickname'];
 }
 if (!empty($_GET)) {
     $date = isset($_GET['date']) ? trim($_GET['date']) : '';
@@ -17,11 +18,13 @@ if ($date != '') {
 }
 
 $helper = DBHelper::get_Link();
-$sql = "select * from diary where date = '" . $date . "'";
+$sql = "select * from diary where username = '$username' date = '$date'";
 $res = $helper->query($sql);
-if ($res->num_rows != 0) {
-    $row = $res->fetch_object();
-    $content = $row->text;
+if ($res) {
+    if ($res->num_rows != 0) {
+        $row = $res->fetch_object();
+        $content = $row->text;
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -79,6 +82,10 @@ if ($res->num_rows != 0) {
         #time {
             display: none;
         }
+
+        .footer-button button {
+            margin-left: 5px;
+        }
     </style>
 </head>
 <body>
@@ -117,10 +124,11 @@ if ($res->num_rows != 0) {
                 </div>
                 <span><?php echo $year ?></span>-<span><?php echo $month ?></span>-<span><?php echo $day ?></span>
             </div>
-            <textarea id="editor" name="content" placeholder="写下你的心情" autofocus><?php echo $content ?></textarea>
+            <textarea id="editor" name="content" placeholder="写下你的心情" autofocus><?php if (isset($content)) echo $content ?></textarea>
         </div>
         <div class="footer-button">
             <button type="submit" id="btn-save" class="am-fr am-btn am-btn-primary am-btn-lg">保存</button>
+            <button type="button" id="btn-back" class="am-fr am-btn am-btn-warning am-btn-lg">返回</button>
         </div>
     </form>
     <div class="am-modal am-modal-alert" tabindex="-1" id="my-alert">
@@ -157,6 +165,10 @@ if ($res->num_rows != 0) {
     });
     $('#btn-cancel').click(function () {
         window.location = "http://localhost/moji/cancel.php";
+    })
+
+    $('#btn-back').click(function () {
+        window.history.back();
     })
 
     function get_date() {

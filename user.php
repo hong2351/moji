@@ -46,15 +46,18 @@
             <h1>墨记</h1>
         </div>
         <div class="am-form-group">
-            <input placeholder="用户名" type="text" name="username">
+            <input placeholder="用户名" type="text" name="username" required>
         </div>
         <div class="am-form-group">
-            <input placeholder="密　码" type="password" name="password" class="doc-ipt-pwd-1">
+            <input placeholder="密　码" type="password" name="password" class="doc-ipt-pwd-1" required>
         </div>
         <div class="am-form-group">
-            <button type="submit" class="am-btn am-btn-primary">确认</button>
-            <button type="button" id="btn-register" class="am-btn am-btn-success">注册</button>
-            <button type="button" id="forget-pass" class="am-btn am-btn-danger forget-pass am-fr">忘记密码</button>
+            <button type="submit" id="btn-login" class="am-btn am-btn-primary">登录</button>
+            <button type="button" id="btn-register" class="am-btn am-btn-success">注册
+            </button>
+            <button type="button" id="forget-pass" class="am-btn am-btn-danger forget-pass am-fr"
+                    data-am-loading="{spinner: 'circle-o-notch', loadingText: '正在找回...' , resetText: '(/◔ ◡ ◔)/'}">找回密码
+            </button>
         </div>
     </form>
 
@@ -91,7 +94,7 @@
             </div>
         </div>
         <div class="am-form-group">
-            <button type="submit" class="am-btn am-btn-primary">注册</button>
+            <button type="submit" id="btn-register" class="am-btn am-btn-primary">注册</button>
             <button type="button" id="btn-back" class="am-btn am-btn-success">返回</button>
         </div>
     </form>
@@ -107,9 +110,9 @@
     <?php endif; ?>
     <div class="am-modal am-modal-alert" tabindex="-1" id="my-alert">
         <div class="am-modal-dialog">
-            <div class="am-modal-hd">Surprise!</div>
+            <div class="am-modal-hd"><b>Surprise!</b></div>
             <div class="am-modal-bd">
-                哈哈！我们没有这个功能！惊不惊喜！开不开心！
+                哈哈！其实我们根本没有这个功能！惊不惊喜！开不开心！
             </div>
             <div class="am-modal-footer">
                 <span class="am-modal-btn">OK</span>
@@ -130,7 +133,23 @@
                 var $field = $(validity.field);
                 var $group = $field.closest('.am-form-group');
                 var $alert = $group.find('.am-alert');
-                // 使用自定义的提示信息 或 插件内置的提示信息
+                var msg = $field.data('validationMessage') || this.getValidationMessage(validity);
+
+                if (!$alert.length) {
+                    $alert = $('<div class="am-alert am-alert-danger"></div>').hide().appendTo($group);
+                }
+
+                $alert.html(msg).show();
+            }
+        });
+        $('#login-form').validator({
+            onValid: function (validity) {
+                $(validity.field).closest('.am-form-group').find('.am-alert').hide();
+            },
+            onInValid: function (validity) {
+                var $field = $(validity.field);
+                var $group = $field.closest('.am-form-group');
+                var $alert = $group.find('.am-alert');
                 var msg = $field.data('validationMessage') || this.getValidationMessage(validity);
 
                 if (!$alert.length) {
@@ -156,9 +175,15 @@
         $("#error-panel").css("display", "none");
     })
 
+    function malert() {
+        $("#forget-pass").button('reset');
+        $('#my-alert').modal('toggle');
+    }
+
     // 忘记密码按钮点击事件
     $("#forget-pass").click(function () {
-        $('#my-alert').modal('toggle');
+        $(this).button('loading');
+        setTimeout(malert, 5000);
     })
 </script>
 </html>

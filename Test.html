@@ -3,36 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <title>simditor demo</title>
-    <link rel="stylesheet" type="text/css" href="css/simditor.css"/>
+    <link rel="stylesheet" type="text/css" href="css/amazeui.min.css"/>
+    <link rel="stylesheet" type="text/css" href="css/amazeui.datetimepicker-se.min.css">
+
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/amazeui.min.js"></script>
+    <script type="text/javascript" src="js/moment-with-locales.min.js"></script>
+    <script type="text/javascript" src="js/amazeui.datetimepicker-se.js"></script>
 </head>
 <body>
-<textarea id="editor" placeholder="写下你的心情" autofocus></textarea>
-</body>
-<script type="text/javascript" src="js/jquery.min.js"></script>
-<script type="text/javascript" src="js/module.min.js"></script>
-<script type="text/javascript" src="js/hotkeys.min.js"></script>
-<script type="text/javascript" src="js/simditor.min.js"></script>
-<script type="text/javascript">
-    var editor = new Simditor({
-        textarea: $('#editor'),
-        upload: false,
-        toolbar: [
-            'title',
-            'bold',
-            'italic',
-            'underline',
-            'strikethrough',
-            'fontScale',
-            'color',
-            'ol',
-            'ul',
-            'blockquote',
-            'table',
-            'link',
-            'hr',
-            'indent',
-            'outdent',
-            'alignment']
+<div class="am-input-group input-group" id='datetimepicker9'>
+    <input class="am-form-field">
+    <span class="am-input-group-label datepickerbutton">
+      <i class="icon-th am-icon-calendar"></i>
+    </span>
+</div>
+<script>
+    $(function () {
+        $('#datetimepicker9').datetimepicker({
+            viewMode: 'years',
+            format: 'YYYY-MM'
+        });
     });
 </script>
+</body>
 </html>

@@ -5,7 +5,7 @@ if (!empty($_POST)) {
     $password = isset($_POST['password']) ? trim($_POST['password']) : '';
 }
 $helper = DBHelper::get_Link();
-$sql = "select password from user where username = '" . $username . "'";
+$sql = "select * from user where username = '" . $username . "'";
 $res = $helper->query($sql);
 if ($res->num_rows == 0) {
     $error[] = "用户不存在";
@@ -14,7 +14,8 @@ if ($res->num_rows == 0) {
     if ($row->password == $password) {
         session_start();
         $_SESSION['user_info'] = array(
-            'username' => $username
+            'username' => $username,
+            'nickname' => $row->nickname
         );
         echo "<script>window.location.href = 'http://localhost/moji/index.php';</script>";
     } else {

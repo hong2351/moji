@@ -1,29 +1,23 @@
 <?php
+require 'DBHelper.php';
 if (!empty($_POST)) {
     $username = isset($_POST['username']) ? trim($_POST['username']) : '';
     $password = isset($_POST['password']) ? trim($_POST['password']) : '';
 }
-$mysql_conf = array(
-    'host' => '127.0.0.1:3306',
-    'db' => 'moji_db',
-    'db_user' => 'root',
-    'db_pwd' => 'root'
-);
-$mysqli = @new mysqli($mysql_conf['host'], $mysql_conf['db_user'], $mysql_conf['db_pwd']);
-if ($mysqli->connect_error) {
-    die("could not connect to the database:\n" . $mysqli->connect_error);
-}
-$mysqli->query("set names 'utf8';");
-$select_db = $mysqli->select_db($mysql_conf['db']);
+$helper = DBHelper::get_Link();
 $sql = "select password from user where username = '" . $username . "'";
-$res = $mysqli->query($sql);
+$res = $helper->query($sql);
 if (!$res) {
-    die("sql error:\n" . $mysqli->error);
-}else{
+    die("sql error" . $helper->link->error);
+} else {
     $row = $res->fetch_object();
-    if ($row->password == $password){
-        echo 'success';
+    if ($row->password == $password) {
+        session_start();
+        $_SESSION['user_info'] = array(
+            'username' => $username
+        );
+        echo "<script>window.location.href = 'http://localhost/moji/show.php';</script>";
+    } else {
+        $error[] = "密码错误";
     }
 }
-$res->free();
-$mysqli->close();

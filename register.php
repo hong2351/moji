@@ -16,7 +16,7 @@ if (!$res) {
     if ($res->num_rows >= 1) {
         $error[] = '用户名已存在';
         $is_login = false;
-        require 'index.php';
+        require 'user.php';
     } else {
         $real_sex = $sex == 'male' ? 1 : 0;
         $sql_insert = "insert into user values('','$username','$password','$nickname','$real_sex','$birthday')";

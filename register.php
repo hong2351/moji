@@ -24,7 +24,7 @@ if (!$res) {
         if (!$res) {
             die("sql error" . $helper->link->error);
         } else {
-            echo 'success';
+            require 'success.php';
         }
     }
 }

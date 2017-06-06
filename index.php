@@ -16,7 +16,7 @@ $month = isset($_GET['month']) ? trim($_GET['month']) : $date_arry['mon'];
 //var_dump($year) . var_dump($month);
 $s_month = $month < 10 ? "0" . $month : $month;
 //var_dump($s_month);
-$page_size = 2;
+$page_size = 5;
 
 $helper = DBHelper::get_Link();
 $sql = "select count(*) from diary where username = '$username' and year='$year' and month='$month'";
@@ -148,9 +148,9 @@ while ($row = mysqli_fetch_assoc($res)) {
                     <div class="am-panel-hd article-title"><?php echo $diary['date'] ?></div>
                     <div class="am-panel-bd">
                         <?php
-                        $content = $diary['text'];
-                        if (strlen($content) > 15) {
-                            echo substr($content, 0, 200) . " ...";
+                        $content = strip_tags($diary['text']);
+                        if (strlen($content) > 270) {
+                            echo substr($content, 0, 270) . "&nbsp;&nbsp;...";
                         } else {
                             echo $content;
                         }
@@ -187,28 +187,28 @@ while ($row = mysqli_fetch_assoc($res)) {
     if (month < 9)
         month = "0" + (month + 1);
     var day = date.getMonth();
-    if (day <= 9)
-        day = "0" + day;
+    if (day < 9)
+        day = "0" + (day + 1);
     var s_date = date.getFullYear() + "-" + month + "-" + day;
 
     $(function () {
         $('#datepicker_area').datepicker().on('changeDate.datepicker.amui', function (event) {
             var d = event.date;
-            window.location = "http://localhost/moji/index.php?year=" + d.getFullYear() + "&month=" + (d.getMonth() + 1);
+            window.location = "index.php?year=" + d.getFullYear() + "&month=" + (d.getMonth() + 1);
         });
     });
 
     $('.article-title').click(function () {
         var temp = $(this).text();
-        window.location = "http://localhost/moji/edit.php?date=" + temp.trim();
+        window.location = "edit.php?date=" + temp.trim();
     })
 
     $('#btn-cancel').click(function () {
-        window.location = "http://localhost/moji/cancel.php";
+        window.location = "cancel.php";
     })
 
     $('#btn-edit').click(function () {
-        window.location = "http://localhost/moji/edit.php?date=" + s_date;
+        window.location = "edit.php?date=" + s_date;
     })
 </script>
 </html>

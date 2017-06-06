@@ -18,8 +18,10 @@ if ($date != '') {
 }
 
 $helper = DBHelper::get_Link();
-$sql = "select * from diary where username = '$username' date = '$date'";
+$sql = "select * from diary where username = '$username' and date = '$date'";
+//echo $sql;
 $res = $helper->query($sql);
+//var_dump($res);
 if ($res) {
     if ($res->num_rows != 0) {
         $row = $res->fetch_object();
@@ -85,6 +87,7 @@ if ($res) {
 
         .footer-button button {
             margin-left: 5px;
+            margin-bottom: 50px;
         }
     </style>
 </head>
@@ -109,7 +112,7 @@ if ($res) {
             <header class="am-panel-hd">
                 <h3 class="am-panel-title">
                 <span class="am-breadcrumb">
-                    <li><a href="http://localhost/moji/index.php" class="am-icon-home">个人日记</a></li>
+                    <li><a href="<?php echo $_SERVER['HTTP_REFERER']; ?>" class="am-icon-home">个人日记</a></li>
                     <li class="am-active">编辑</li>
                 </span>
                 </h3>
@@ -121,10 +124,12 @@ if ($res) {
                     <input type="text" name="month" value="<?php echo $month ?>">
                     <input type="text" name="day" value="<?php echo $day ?>">
                     <input type="text" name="date" value="<?php echo $date ?>">
+                    <input type="text" name="page" value="<?php echo $_SERVER['HTTP_REFERER'] ?>">
                 </div>
                 <span><?php echo $year ?></span>-<span><?php echo $month ?></span>-<span><?php echo $day ?></span>
             </div>
-            <textarea id="editor" name="content" placeholder="写下你的心情" autofocus><?php if (isset($content)) echo $content ?></textarea>
+            <textarea id="editor" name="content" placeholder="写下你的心情"
+                      autofocus><?php if (isset($content)) echo $content ?></textarea>
         </div>
         <div class="footer-button">
             <button type="submit" id="btn-save" class="am-fr am-btn am-btn-primary am-btn-lg">保存</button>
@@ -164,7 +169,7 @@ if ($res) {
             'hr']
     });
     $('#btn-cancel').click(function () {
-        window.location = "http://localhost/moji/cancel.php";
+        window.location = "cancel.php";
     })
 
     $('#btn-back').click(function () {

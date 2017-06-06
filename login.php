@@ -17,7 +17,7 @@ if ($res->num_rows == 0) {
             'username' => $username,
             'nickname' => $row->nickname
         );
-        echo "<script>window.location.href = 'http://localhost/moji/index.php';</script>";
+        echo "<script>window.location.href = 'index.php';</script>";
     } else {
         $error[] = "密码错误";
     }

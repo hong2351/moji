@@ -7,6 +7,7 @@ if (!empty($_POST)) {
     $month = isset($_POST['month']) ? trim($_POST['month']) : '';
     $day = isset($_POST['day']) ? trim($_POST['day']) : '';
     $date = isset($_POST['date']) ? trim($_POST['date']) : '';
+    $page = isset($_POST['page']) ? trim($_POST['page']) : '';
 }
 $helper = DBHelper::get_Link();
 $sql = "select * from diary where date = '" . $date . "'";
@@ -20,7 +21,7 @@ if (!$res) {
         if (!$res) {
             die("sql error" . $helper->link->error);
         } else {
-            echo 'update success';
+            require 'save_success.php';
         }
     } else {
         $sql_insert = "insert into diary values('','$username','$content','$year','$month','$day','$date')";
@@ -28,7 +29,7 @@ if (!$res) {
         if (!$res) {
             die("sql error" . $helper->link->error);
         } else {
-            echo 'insert success';
+            require 'save_success.php';
         }
     }
 }

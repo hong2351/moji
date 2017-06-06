@@ -8,7 +8,7 @@ if (!empty($_POST)) {
 // 获取数据库连接
 $helper = DBHelper::get_Link();
 // 构造sql语句
-$sql = "select * from user where username = '" . $username . "'";
+$sql = "select * from admin where username = '" . $username . "'";
 // 获取查询结果集
 $res = $helper->query($sql);
 if ($res->num_rows == 0) {
@@ -17,13 +17,12 @@ if ($res->num_rows == 0) {
     $row = $res->fetch_object();
     if ($row->password == $password) {
         session_start();
-        $_SESSION['user_info'] = array(
-            'username' => $username,
-            'nickname' => $row->nickname
+        $_SESSION['admin_info'] = array(
+            'username' => $username
         );
         echo "<script>window.location.href = 'index.php';</script>";
     } else {
         $error[] = "密码错误";
     }
 }
-require 'user.php';
+require 'login.php';

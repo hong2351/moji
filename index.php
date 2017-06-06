@@ -150,7 +150,7 @@ while ($row = mysqli_fetch_assoc($res)) {
                         <?php
                         $content = strip_tags($diary['text']);
                         if (strlen($content) > 270) {
-                            echo substr($content, 0, 270) . "&nbsp;&nbsp;...";
+                            echo mb_substr($content, 0, 270) . "&nbsp;&nbsp;...";
                         } else {
                             echo $content;
                         }

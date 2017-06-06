@@ -75,6 +75,10 @@ if ($res) {
             height: 60px;
         }
 
+        .title-bar {
+            cursor: pointer;
+        }
+
         .date {
             font-size: 20px;
             padding: 15px;
@@ -95,7 +99,7 @@ if ($res) {
 <div id="main-area">
     <div class="title">
         <span class="am-fl">
-            <h2>墨记</h2>
+            <h2 class="title-bar">墨记</h2>
         </span>
         <div id="user" class="am-fr">
             <span class="am-monospace">
@@ -166,10 +170,15 @@ if ($res) {
             'blockquote',
             'table',
             'link',
-            'hr']
+            'hr',
+            'alignment']
     });
     $('#btn-cancel').click(function () {
         window.location = "cancel.php";
+    })
+
+    $('.title-bar').click(function () {
+        window.location = 'index.php';
     })
 
     $('#btn-back').click(function () {

@@ -3,7 +3,7 @@ date_default_timezone_set("PRC");
 require 'DBHelper.php';
 session_start();
 if (!isset($_SESSION['user_info'])) {
-    echo "<script>window.location.href = 'http://localhost/moji/user.php';</script>";
+    echo "<script>window.location.href = 'user.php';</script>";
 }
 $username = $_SESSION['user_info']['username'];
 $nickname = $_SESSION['user_info']['nickname'];
@@ -85,8 +85,8 @@ while ($row = mysqli_fetch_assoc($res)) {
             margin-right: auto;
         }
 
-        .simditor {
-            border: none;
+        .title-bar{
+            cursor: pointer;
         }
 
         .title {
@@ -110,7 +110,7 @@ while ($row = mysqli_fetch_assoc($res)) {
 <div id="main-area">
     <div class="title">
         <span class="am-fl">
-            <h2>墨记</h2>
+            <h2 class="title-bar">墨记</h2>
         </span>
         <div id="user" class="am-fr">
             <span class="am-sans-serif">
@@ -197,6 +197,10 @@ while ($row = mysqli_fetch_assoc($res)) {
             window.location = "index.php?year=" + d.getFullYear() + "&month=" + (d.getMonth() + 1);
         });
     });
+
+    $('.title-bar').click(function () {
+        window.location = 'index.php';
+    })
 
     $('.article-title').click(function () {
         var temp = $(this).text();

@@ -118,7 +118,7 @@ while ($row = mysqli_fetch_assoc($res)) {
     </div>
     <div class="am-panel am-panel-default">
         <header class="am-panel-hd">
-            <span></span>
+            <div>管理页面删除数据将无法恢复，删除前请谨慎</div>
         </header>
         <div data-am-widget="tabs" class="am-tabs am-tabs-default">
             <ul class="am-tabs-nav am-cf">

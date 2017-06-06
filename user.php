@@ -25,6 +25,10 @@
             padding-top: 10px;
         }
 
+        .title-bar{
+            cursor: pointer;
+        }
+
         <?php
             if (isset($is_login)){
                 if (!$is_login){
@@ -43,7 +47,7 @@
 <div class="main_frame">
     <form method="post" action="login.php" class="am-form" id="login-form">
         <div class="am-form-group title">
-            <h1>墨记</h1>
+            <h1 class="title-bar">墨记</h1>
         </div>
         <div class="am-form-group">
             <input placeholder="用户名" type="text" name="username" required>
@@ -63,19 +67,19 @@
 
     <form method="post" action="register.php" class="am-form" id="register-form">
         <div class="am-form-group title">
-            <h1>墨记</h1>
+            <h1 class="title-bar">墨记</h1>
         </div>
         <div class="am-form-group">
-            <input placeholder="用户名" type="text" name="username" id="register-username" required maxlength="10"
-                   minlength="5">
+            <input placeholder="用户名&nbsp;(字母+数字&nbsp;4~10位)" type="text" name="username" id="register-username"
+                   pattern="^[A-Za-z][A-Za-z1-9_-]{4,10}$" required>
         </div>
         <div class="am-form-group">
-            <input placeholder="密　码" type="password" name="password" class="doc-ipt-pwd-1" id="register-password"
-                   required maxlength="10" minlength="5">
+            <input placeholder="密　码&nbsp;(字母+数字&nbsp;4~10位)" type="password" name="password" class="doc-ipt-pwd-1"
+                   id="register-password" pattern="(?!^\\d+$)(?!^[a-zA-Z]+$)(?!^[_#@]+$).{4,10}" required>
         </div>
         <div class="am-form-group">
-            <input placeholder="昵　称" type="text" name="nickname" id="register-nickname" required maxlength="5"
-                   minlength="2">
+            <input placeholder="昵　称&nbsp;(中英文、数字、减号或下划线)" type="text" name="nickname" id="register-nickname"
+                   minlength="2" maxlength="20" required>
         </div>
         <div class="am-form-group">
             <label class="am-radio-inline">
@@ -160,6 +164,10 @@
             }
         });
     });
+
+    $('.title-bar').click(function () {
+        window.location = 'index.php';
+    })
 
     // 注册按钮点击事件
     $("#btn-register").click(function () {
